@@ -1,0 +1,71 @@
+{
+  "mariah's Timeline": {
+    "94 | 97": {
+      "Korea University": {
+        "Bachelor of Engineering in Industrial Engineering": {
+          "President of computer club C.L.S": 1
+        }
+      }
+    },
+    "98 | 99": {
+      "Korea University": {
+        "Master of Engineering in Industrial Engineering": {
+          "CIM/ERP": 0.5,
+          "OOP, CORBA": 0.5,
+          "Data Mining": 1
+        }
+      }
+    },
+    "2000 | 03": {
+      "Pionsoft": {
+        "B2B Marketplace/MRO": {
+          "Online Auction": 0.5
+        },
+        "PDK (Pionic Development Kit)": {
+          "Library and Framework": 0.5,
+          "Tool: SITEGen, Installer": 0.5
+        },
+        "Pionic CMS": {
+          "Templating": 0.5,
+          "Publishing": 0.5
+        },
+        "B2C Shopping Mall": {
+          "CJmall": 0.5
+        }
+      }
+    },
+    "JUN03 | JUL09": {
+      "TmaxSoft": {
+        "AnyLink": {
+          "GUI Tool: Admin/Studio": 1,
+          "Mapping Engine": 1
+        },
+        "ProBus": {
+          "Runtime": 1,
+          "Data Repository, NIO": 1
+        }
+      }
+    },
+    "AUG09 | JUN10": {
+      "TmaxCore": {
+        "TmaxWindow OLE32": {
+          "Linking & Embedding": 0.5,
+          "Structured Storage": 0.5
+        }
+      }
+    },
+    "JUL10 |": {
+      "S-Core": {
+        "SLP DTS (Development Test Suite)": {
+          "Part Leader (a team of 8)": 0.5
+        },
+        "SLP WAC IDE, Tizen Web IDE": {
+          "Part Leader (a team of 4)": 1
+        },
+        "Tizen IDE": {
+          "Part Leader (a team of 11)": 1
+        }
+      }
+    }
+  }
+}

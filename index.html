@@ -1,0 +1,197 @@
+<!--
+ * TODO
+  - Format month string in depth 1 (Is it possible to use innerHTML in svg text?)
+  - Zoomable Icicle with label
+  - Hyperlink
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Partition - Icicle</title>
+    <script type="text/javascript" src="d3.v2.min.js"></script>
+    <!--
+    <script src="svginnerhtml.js"></script>
+    -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine|Droid+Sans">
+    <link rel="stylesheet" type="text/css" href="ordered-list.css">
+    <style type="text/css">
+rect {
+  stroke: #fff;
+}
+
+.title {
+    font-family: 'Tangerine', serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 4px 4px 4px #aaa;
+    fill: #fff;
+    text-anchor: middle;
+}
+
+.where {
+    font: 12px Verdana, sans-serif;
+    fill: #fff;
+    text-anchor: middle;
+}
+
+.label {
+    font: 10px Verdana, sans-serif;
+    text-anchor: middle;
+}
+
+.time {
+    font-family: 'Droid Sans', serif;
+    font-size: 14px;
+/*    text-shadow: 2px 2px 2px #aaa; */
+    fill: #fff;
+    stroke: #fff;
+    text-anchor: middle;
+}
+
+body {
+    font: 76%/1.5 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Helvetica,Arial,sans-serif;
+    padding: 1em 0;
+}
+    </style>
+  </head>
+  <body>
+    <h1>Kim Kangho</h1>
+
+    <h2>Overview</h2>
+    <div id="body">
+        <ol>
+            <li>E-MAIL
+                <ol>
+                    <li>cimfalab@gmail.com
+                </ol>
+            <li>HOMEPAGE AND BLOG
+                <ol>
+                    <li><a href="http://cimfalab.github.com">http://cimfalab.github.com</a>
+                    <li><a href="http://tizenschools.com">http://tizenschools.com</a> (main contributor of the Tizen blog)
+                </ol>
+            <li>TECHNICAL SKILLS
+                <ol>
+                    <li>Web Technology: JavaScript/HTML/CSS/XML/JSON and JSP. Skillful at HTML5. Please visit my presentation <a href="http://cimfalab.github.com/web-report/">http://cimfalab.github.com/web-report/</a>.</li>
+                    <li>Java: J2SE, J2EE. Both experiences in server-side and client-side development. Client-side includes GUI tools using Swing/SWT.</li>
+                    <li>Middle-ware: WAS (Web Application Server) like WebLogic and JEUS</li>
+                    <li>Languages: Java, JavaScript, C/C++, Visual Basic
+                </ol>
+            <li>HONORS AND AWARDS
+                <ol>
+                    <li>Won a Best Part of the Year for leading Tizen IDE project in S-Core (2012)
+                    <li><a href="https://events.linuxfoundation.org/events/collaboration-summit/kang-kim">Co-speaker for "Introduction to Tizen SDK"</a> in 6th Annual Linux Foundation Collaboration Summit (April 3 - 5, 2012, San Francisco, CA)
+                    <li>Won a Best Researcher of the Year for leading Tizen Web IDE project in S-Core (2011)
+                    <li>Won a Best Researcher of the Year in TmaxSoft (2008)
+                    <li>Certified SCJP (Sun Certified Java Programmer) (2000)
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+    <h2>Infographic Resume</h2>
+    <div id="chart"></div>
+    <script type="text/javascript">
+var w = 1280,
+    h = 700,
+    x = d3.scale.linear().range([0, w]),
+    y = d3.scale.linear().range([0, h]),
+    color = d3.scale.category20c();
+
+var h1 = [ 50, 40, 80, 280, 180 ];
+
+var vis = d3.select("#chart").append("svg:svg")
+    .attr("width", w)
+    .attr("height", h);
+
+var partition = d3.layout.partition()
+    .sort(null) // no sort
+    .children(function(d) { return isNaN(d.value) ? d3.entries(d.value) : null; })
+    .value(function(d) { return d.value; });
+
+d3.json("info.json", function(json) {
+  console.log(d3.entries(json)[0]);
+  var rect = vis.selectAll("rect")
+      .data(partition(d3.entries(json)[0]))
+    .enter().append("svg:rect")
+      .attr("x", function(d) { return x(d.x); })
+      .attr("y", getY)
+      .attr("width", function(d) { return x(d.dx); })
+      .attr("height", getHeight)
+      .attr("fill", function(d) { return color((d.children ? d : d.parent).data.key); })
+      .on("click", click);
+  var label = vis.selectAll(".label")
+      .data(partition(d3.entries(json)[0]))
+    .enter().append("svg:text")
+      .attr("class", "label")
+      .attr("transform", getLabel)
+      //.html(formatTime); // It requires svginnerhtml.js?
+      .text(function(d) { return d.data.key; });
+  vis.selectAll(".label")
+      .attr("class", getTimeClass);
+
+  function click(d) {
+    x.domain([d.x, d.x + d.dx]);
+    y.domain([d.y, 1]).range([d.y ? 20 : 0, h]);
+
+    rect.transition()
+      .duration(750)
+      .attr("x", function(d) { return x(d.x); })
+      //.attr("y", function(d) { return y(d.y); })
+      .attr("y", getY)
+      .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
+      //.attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
+      .attr("height", getHeight);
+  
+    label.transition()
+      .duration(750)
+  }
+
+  function formatTime(d) {
+    var element = document.createElement('div');
+    element.innerHTML = d.data.key;
+    return element.innerHTML;
+  }
+
+  function getTimeClass(d) {
+    switch (d.depth) {
+      case 0:
+        return "title";
+      case 1:
+        return "time";
+      case 2:
+        return "where";
+      default:
+        return "label";
+    }
+  }
+
+  function getLabel(d) {
+    var y1;
+    //y1 = y(d.y) + y(d.dy) / 2;
+    y1 = getY(d) + (getHeight(d) / 2);
+    var t = "translate(" + (x(d.x) + x(d.dx) / 2) + "," + y1 + ")";
+    if (d.depth < 3)
+      return t;
+    else
+      return t + "rotate(90)";
+  }
+  function getHeight(d) {
+    return h1[d.depth];
+  }
+  function getY(d) {
+    switch (d.depth) {
+      case 0:
+        return 0;
+      default:
+        var sum = 0;
+        for (var i = 0; i < d.depth; i++)
+          sum += h1[i];
+        return sum;
+    }
+  }
+});
+    </script>
+  </body>
+</html>
