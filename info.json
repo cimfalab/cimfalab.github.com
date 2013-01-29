@@ -12,7 +12,7 @@
         "Master of Engineering in Industrial Engineering": {
           "CIM/ERP": 0.5,
           "OOP, CORBA": 0.5,
-          "Data Mining": 1
+          "Data Mining": 0.5
         }
       }
     },
@@ -22,12 +22,11 @@
           "Online Auction": 0.5
         },
         "PDK (Pionic Development Kit)": {
-          "Library and Framework": 0.5,
+          "Library and Framework, J2EE/WAS": 1,
           "Tool: SITEGen, Installer": 0.5
         },
         "Pionic CMS": {
-          "Templating": 0.5,
-          "Publishing": 0.5
+          "Templating/Publishing": 0.5
         },
         "B2C Shopping Mall": {
           "CJmall": 0.5
@@ -42,7 +41,7 @@
         },
         "ProBus": {
           "Runtime": 1,
-          "Data Repository, NIO": 1
+          "Data Repository, NIO": 0.8
         }
       }
     },
