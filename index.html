@@ -31,7 +31,6 @@ rect {
 }
 
 .where {
-    font: 12px Verdana, sans-serif;
     fill: #fff;
     text-anchor: middle;
 }
@@ -99,13 +98,13 @@ body {
     <h2>Infographic Resume</h2>
     <div id="chart"></div>
     <script type="text/javascript">
-var w = 1280,
-    h = 700,
+var w = 1280, h = 700,
     x = d3.scale.linear().range([0, w]),
     y = d3.scale.linear().range([0, h]),
     color = d3.scale.category20c();
 
 var h1 = [ 50, 40, 80, 280, 200 ];
+var classes = [ 'title', 'time', 'where', 'label', 'label' ];
 
 var vis = d3.select("#chart").append("svg:svg")
     .attr("width", w)
@@ -135,7 +134,7 @@ d3.json("info.json", function(json) {
       //.html(formatTime); // It requires svginnerhtml.js?
       .text(function(d) { return d.data.key; });
   vis.selectAll(".label")
-      .attr("class", getTimeClass);
+      .attr("class", getClass);
 
   function click(d) {
     x.domain([d.x, d.x + d.dx]);
@@ -144,10 +143,8 @@ d3.json("info.json", function(json) {
     rect.transition()
       .duration(750)
       .attr("x", function(d) { return x(d.x); })
-      //.attr("y", function(d) { return y(d.y); })
       .attr("y", getY)
       .attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
-      //.attr("height", function(d) { return y(d.y + d.dy) - y(d.y); });
       .attr("height", getHeight);
   
     label.transition()
@@ -160,40 +157,22 @@ d3.json("info.json", function(json) {
     return element.innerHTML;
   }
 
-  function getTimeClass(d) {
-    switch (d.depth) {
-      case 0:
-        return "title";
-      case 1:
-        return "time";
-      case 2:
-        return "where";
-      default:
-        return "label";
-    }
-  }
-
+  function getClass(d) { return classes[d.depth]; }
   function getLabel(d) {
     var y1;
     //y1 = y(d.y) + y(d.dy) / 2;
     y1 = getY(d) + (getHeight(d) / 2);
     var t = "translate(" + (x(d.x) + x(d.dx) / 2) + "," + y1 + ")";
-    if (d.depth < 3)
-      return t;
-    else
-      return t + "rotate(90)";
+    return (d.depth >= 3) ? t + "rotate(90)" : t; // rotate details part clockwise
   }
-  function getHeight(d) {
-    return h1[d.depth];
-  }
+  function getHeight(d) { return h1[d.depth]; }
   function getY(d) {
     switch (d.depth) {
       case 0:
         return 0;
       default:
         var sum = 0;
-        for (var i = 0; i < d.depth; i++)
-          sum += h1[i];
+        for (var i = 0; i < d.depth; i++) sum += h1[i];
         return sum;
     }
   }
