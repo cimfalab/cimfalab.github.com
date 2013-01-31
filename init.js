@@ -1,0 +1,1 @@
+$(document).ready(function(){if(CMDetect.isCanvas&&CMDetect.browserName!=""){CMUtiles.initRandom();Address.init();}else{ErrorMsg.showFirst();}});
