@@ -1,19 +1,9 @@
-<!--
- * TODO
-  - Format month string in depth 1 (Is it possible to use innerHTML in svg text?)
-  - Zoomable Icicle with label
-  - Hyperlink
--->
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>Kim Kangho - Infographic</title>
     <script type="text/javascript" src="d3.v2.min.js"></script>
-    <!--
-    <script src="svginnerhtml.js"></script>
-    -->
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine|Droid+Sans">
     <link rel="stylesheet" type="text/css" href="ordered-list.css">
     <style type="text/css">
@@ -39,6 +29,10 @@ rect {
 .label {
     font: 10px Verdana, sans-serif;
     text-anchor: middle;
+}
+
+.link {
+    text-decoration: underline;
 }
 
 .time {
@@ -113,11 +107,14 @@ var vis = d3.select("#chart").append("svg:svg")
 
 var partition = d3.layout.partition()
     .sort(null) // no sort
-    .children(function(d) { return isNaN(d.value) ? d3.entries(d.value) : null; })
+    .children(function(d) {
+        if (d.key == 'link')
+            return;
+        return isNaN(d.value) ? d3.entries(d.value) : null;
+    })
     .value(function(d) { return d.value; });
 
 d3.json("info.json", function(json) {
-  console.log(d3.entries(json)[0]);
   var rect = vis.selectAll("rect")
       .data(partition(d3.entries(json)[0]))
     .enter().append("svg:rect")
@@ -127,13 +124,18 @@ d3.json("info.json", function(json) {
       .attr("height", getHeight)
       .attr("fill", function(d) { return color((d.children ? d : d.parent).data.key); })
       .on("click", click);
+
   var label = vis.selectAll(".label")
       .data(partition(d3.entries(json)[0]))
-    .enter().append("svg:text")
-      .attr("class", "label")
-      .attr("transform", getLabel)
-      //.html(formatTime); // It requires svginnerhtml.js?
-      .text(function(d) { return d.data.key; });
+    .enter().append("svg:a").attr("xlink:href", getLink).append("svg:text")
+      .attr("class", getClass)
+      .attr("transform", transformLabel)
+      .text(function(d) {
+        if (d.data.key == 'link') {
+            return;
+        }
+        return d.data.key;
+      });
   vis.selectAll(".label")
       .attr("class", getClass);
 
@@ -158,8 +160,13 @@ d3.json("info.json", function(json) {
     return element.innerHTML;
   }
 
-  function getClass(d) { return classes[d.depth]; }
-  function getLabel(d) {
+  function getClass(d) {
+    var c = classes[d.depth];
+    if (getLink(d))
+      c += " link";
+    return c;
+  }
+  function transformLabel(d) {
     var y1;
     //y1 = y(d.y) + y(d.dy) / 2;
     y1 = getY(d) + (getHeight(d) / 2);
@@ -176,6 +183,15 @@ d3.json("info.json", function(json) {
         for (var i = 0; i < d.depth; i++) sum += h1[i];
         return sum;
     }
+  }
+  function getLink(d) {
+    if (d.children) {
+      for (var i in d.children) {
+        if (d.children[i].data.key == 'link')
+          return d.children[i].data.value;
+      }
+    }
+    return null;
   }
 });
     </script>

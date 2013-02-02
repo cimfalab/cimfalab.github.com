@@ -9,6 +9,7 @@
     },
     "98 | 99": {
       "Korea University": {
+        "link": "http://cim.korea.ac.kr",
         "Master of Engineering in Industrial Engineering": {
           "CIM/ERP": 0.5,
           "OOP, CORBA": 0.5,
@@ -22,6 +23,7 @@
           "Online Auction": 0.5
         },
         "PDK (Pionic Development Kit)": {
+          "link": "http://www.javaservice.net/~java/bbs/read.cgi?b=consult&c=r_p&n=1017503739",
           "Library and Framework, J2EE/WAS": 1,
           "Tool: SITEGen, Installer": 0.5
         },
@@ -36,6 +38,7 @@
     "JUN03 | JUL09": {
       "TmaxSoft": {
         "AnyLink": {
+          "link": "http://test.tta.or.kr/research/result/index.jsp?team_cd=S&pageNum=0&tech_cd=GS%C0%CE%C1%F5&syear=0000&gubun=title&searchString=AnyLink",
           "GUI Tool: Admin/Studio": 1,
           "Mapping Engine": 1
         },
@@ -62,6 +65,7 @@
           "Part Leader (a team of 4)": 1
         },
         "Tizen IDE": {
+          "link": "http://tizenschools.com",
           "Part Leader (a team of 11)": 1
         }
       }
