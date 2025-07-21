@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Privacy Policy</title>
+    <style>
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        padding:1em;
+      }
+    </style>
+  </head>
+  <body>
+    <strong>Privacy Policy</strong>
+    <p>
+      This privacy policy applies to the 책꽂이 app (hereby referred to as "Application") for mobile devices as a Free service. This service is intended for use "AS IS".
+    </p><br/>
+
+    <strong>Information Collection and Use</strong>
+    <p>If you choose whether this data is collected, the Application collects information when you use it. This information may include information such as</p>
+    <ul>
+      <li>Crash logs</li>
+      <li>The operating system you use on your mobile device</li>
+    </ul>
+    <p>The Application does not gather precise information about the location of your mobile device.</p><br/>
+
+    <strong>Third Party Access</strong>
+    <p>Please note that the Application utilizes third-party services that have their own Privacy Policy about handling data. You can check the detailed Privacy Policy such as Retention Policy and Security in the below link of the third-party service providers used by the Application:</p>
+    <ul>
+      <li><a href="https://firebase.google.com/support/privacy/" target="_blank">Firebase Crashlytics</a></li>
+    </ul><br/>
+
+    <strong>Opt-Out Rights</strong>
+    <p>Collecting information is turned off by default. It only works when you agree to it in the Settings menu.</p>
+    <p>When you want the Application to stop collecting information, you can stop all collection of information easily by turning off the Settings or uninstalling the Application.</p>
+  </body>
+</html>
